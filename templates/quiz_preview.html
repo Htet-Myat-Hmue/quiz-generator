@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Quiz Preview</title>
+</head>
+<body>
+    <div>
+        <img src="{{ url_for('static', filename='quiz-genie.png') }}" alt="Quiz Image">
+    </div>
+    <h2>Generated Quiz Questions</h2>
+    <div class="sec-quiz-preview">
+        <ul class="quiz-list">
+            {% for item in questions %}
+                <li>
+                    {{ item['question'] }}<br>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <a class = "go-back-btn" href="/">Go Back</a>
+</body>
+</html>

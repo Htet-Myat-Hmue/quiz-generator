@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #38b6ff71;
+}
+
+.container{
+    margin : 20px;
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: 100;
+    color: #333;
+    margin : 20px 100px;
+}
+
+h2{
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    margin-top: 20px;
+}
+
+img {
+    display: block; 
+    margin: 20px auto; 
+    width: 35% !important; /* Correct placement of !important */
+    height: auto;
+}
+
+.sec-form-upload{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sec-upload {
+    border: 2px solid #000000;
+    border-radius: 20px;
+    margin: 30px 400px;
+    padding: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    transition: transform 0.3s; /* Smooth transition for 3D effect */
+}
+
+.sec-upload:hover {
+    /* transform: translateY(-3px); */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+button, .file-label {
+    background-color: #ff3131; /* Background color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 10px 20px; /* Padding */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s, transform 0.3s; /* Transition effects */
+    display: inline-block; /* Make label and button inline */
+    text-align: center; /* Center text in label */
+    margin: 10px; /* Space above */
+}
+
+button:hover, .file-label:hover {
+    background-color: #e02c2c; /* Darker shade on hover */
+    transform: scale(1.05); /* Slightly enlarge */
+}
+
+button:active, .file-label:active {
+    transform: scale(0.95); /* Slightly shrink when clicked */
+}
+
+/* Hide the default file input */
+input[type="file"] {
+    display: none; /* Hide default file input */
+}
+
+/* File name display */
+.file-name {
+    margin: 10px; /* Space between label and file name display */
+    font-weight: bold; /* Make file name bold */
+    color: #333; /* Color of the file name */
+}
+
+/* Container for buttons */
+.button-container {
+    display: flex; /* Use flexbox */
+    justify-content: space-between; /* Space between buttons */
+    margin-top: 10px; /* Space above button container */
+}
+
+.sec-quiz-preview {
+    border: 2px solid #000000;
+    border-radius: 20px;
+    margin: 30px 100px;
+    padding: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    transition: transform 0.3s; /* Smooth transition for 3D effect */
+}
+
+.sec-quiz-preview:hover {
+    /* transform: translateY(-3px); */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+a{
+    text-decoration:none;
+}
+.go-back-btn{
+    background-color: #ff3131; /* Background color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 10px 20px; /* Padding */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s, transform 0.3s; /* Transition effects */
+    display: inline-block; /* Make label and button inline */
+    text-align: center; /* Center text in label */
+    margin-left: 100px; /* Space above */
+}
+.go-back-btn:hover{
+    background-color: #e02c2c; /* Darker shade on hover */
+    transform: scale(1.05); /* Slightly enlarge */
+}
+
+.quiz-list {
+    list-style-type: none; /* Remove default bullets */
+    padding: 0; /* Remove default padding */
+}
+
+.quiz-list li {
+    background-color: #f9f9f9; /* Light background for list items */
+    border: 1px solid #ddd; /* Border around list items */
+    border-radius: 8px; /* Rounded corners for list items */
+    padding: 15px; /* Padding inside each list item */
+    margin: 10px 0; /* Space between list items */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.quiz-list li:hover {
+    background-color: #ff3131; /* Change background on hover */
+    color: white; /* Change text color on hover */
+    cursor: pointer; /* Pointer cursor on hover */
+}

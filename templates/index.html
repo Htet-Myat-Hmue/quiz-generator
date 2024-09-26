@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Quiz Generator</title>
+</head>
+<body class="container">
+    <div>
+        <img src="{{ url_for('static', filename='quiz-genie.png') }}" alt="Quiz Image">
+    </div>
+
+    <!-- <h1>This website aims to develop an AI-powered quiz generator capable of automatically creating quizzes from user-uploaded Word (.docx) and PDF files. The system will extract content from these files, utilize natural language processing (NLP) for processing, and produce various question types (multiple-choice, true/false, blank and short answer) based on the extracted text.</h1> -->
+
+    <div class = "sec-upload">
+
+        <h2>Upload a Document to Generate Quiz</h2>
+
+        <div class="sec-form-upload">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="button-container">
+                    <label for="file-upload" class="file-label">Choose File</label>
+                    <input type="file" name="file" accept=".docx, .pdf" id="file-upload" required onchange="updateFileName()">
+                    <button type="submit">Generate Quiz</button>
+                </div>
+                <div class="file-name" id="file-name-display">No file chosen</div> <!-- File name display -->
+            </form>
+        </div>
+    </div>
+<script>
+        function updateFileName() {
+            const input = document.getElementById('file-upload');
+            const fileNameDisplay = document.getElementById('file-name-display');
+            const fileName = input.files.length > 0 ? input.files[0].name : 'No file chosen'; // Get the file name
+            fileNameDisplay.textContent = fileName; // Update the display
+        }
+</script>
+</body>
+<!-- <section>
+    <footer>
+        Copyright 2023 MIIT
+    </footer>
+</section> -->
+</html>
