@@ -46,7 +46,7 @@ def generate_pdf(questions, include_answers):
     y = height - 50
 
     pdf.setFont("Helvetica", 12)
-    
+
     for index, question_data in enumerate(questions, start=1):
         question = question_data['question']
         choices = question_data.get('choices', [])
@@ -55,9 +55,11 @@ def generate_pdf(questions, include_answers):
         pdf.drawString(50, y, f"Q{index}: {question}")
         y -= 20
         
-        for i, choice in enumerate(choices, start=1):
-            pdf.drawString(70, y, f"{i}. {choice}")
-            y -= 20
+        # Check if choices is not None and has elements
+        if choices:
+            for i, choice in enumerate(choices, start=1):
+                pdf.drawString(70, y, f"{i}. {choice}")
+                y -= 20
 
         if include_answers:
             pdf.drawString(50, y, f"Answer: {answer}")
@@ -71,7 +73,7 @@ def generate_pdf(questions, include_answers):
 
     pdf.save()
     buffer.seek(0)
-    
+
     return send_file(buffer, as_attachment=True, download_name="quiz.pdf", mimetype='application/pdf')
 
 def generate_docx(questions, include_answers):
@@ -84,11 +86,14 @@ def generate_docx(questions, include_answers):
 
         doc.add_paragraph(f"Q{index}: {question}")
 
-        for i, choice in enumerate(choices, start=1):
-            doc.add_paragraph(f"{i}. {choice}", style='ListNumber')
+        # Check if choices is not None and has elements
+        if choices:
+            for i, choice in enumerate(choices, start=1):
+                doc.add_paragraph(f"{i}. {choice}", style='ListNumber')
 
         if include_answers:
             doc.add_paragraph(f"Answer: {answer}")
+
         doc.add_paragraph("")  # Add some space
 
     buffer = BytesIO()
@@ -96,6 +101,5 @@ def generate_docx(questions, include_answers):
     buffer.seek(0)
 
     return send_file(buffer, as_attachment=True, download_name="quiz.docx", mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-
 if __name__ == '__main__':
     app.run(debug=True)
