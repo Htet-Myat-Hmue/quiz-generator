@@ -5,6 +5,10 @@ body {
     background-color: #38b6ff71;
 }
 
+hr{
+    display: none;
+}
+
 .container{
     margin : 20px;
 }
@@ -55,7 +59,7 @@ img {
 }
 
 button, .file-label {
-    background-color: #ff3131; /* Background color */
+    background-color: #e02c2c;; /* Background color */
     color: white; /* Text color */
     border: none; /* No border */
     border-radius: 10px; /* Rounded corners */
@@ -92,7 +96,8 @@ input[type="file"] {
 /* Container for buttons */
 .button-container {
     display: flex; /* Use flexbox */
-    justify-content: space-between; /* Space between buttons */
+    justify-content: center; 
+    align-items: center;
     margin-top: 10px; /* Space above button container */
 }
 
@@ -100,7 +105,7 @@ input[type="file"] {
     border: 2px solid #000000;
     border-radius: 20px;
     margin: 30px 100px;
-    padding: 50px;
+    padding: 25px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
     transition: transform 0.3s; /* Smooth transition for 3D effect */
 }
@@ -114,7 +119,7 @@ a{
     text-decoration:none;
 }
 .go-back-btn{
-    background-color: #ff3131; /* Background color */
+    background-color: #e02c2c;; /* Background color */
     color: white; /* Text color */
     border: none; /* No border */
     border-radius: 10px; /* Rounded corners */
@@ -146,7 +151,98 @@ a{
 }
 
 .quiz-list li:hover {
-    background-color: #ff3131; /* Change background on hover */
+    background-color: #e02c2c;; /* Change background on hover */
     color: white; /* Change text color on hover */
     cursor: pointer; /* Pointer cursor on hover */
 }
+
+.quiz-option {
+    display: flex; /* Use flexbox for the layout */
+    justify-content: space-between; /* Distribute space between items */
+    margin: 15px; /* Space below the quiz option section */
+}
+
+.quiz-type-container,
+.number-questions-container {
+    flex: 1; /* Allow each container to grow equally */
+    margin-right: 10px; /* Add space between the two containers */
+    padding: 15px; /* Inner padding for better spacing */
+    background-color: #5c9dc35c; /* White background for containers */
+    border-radius: 10px; /* Rounded corners for a softer look */
+    text-align: center;
+}
+
+/* Remove margin from the last container */
+.number-questions-container {
+    margin-right: 0; /* Remove right margin from the last item */
+}
+
+label {
+    margin: 10px; /* Space between label and input */
+    font-weight: bold; /* Bold text for labels */
+    color: #333; /* Dark color for text */
+}
+
+select,
+input[type="number"] {
+/* Full width for inputs */    padding: 10px; /* Inner padding for inputs */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Rounded corners for inputs */
+    font-size: 16px; /* Increase font size for readability */
+    transition: border-color 0.3s; /* Smooth transition for border color */
+}
+
+input[type="number"]{
+    width: 89%;
+}
+
+select:focus,
+input[type="number"]:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Soft blue shadow */
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Remove default number input styling in Firefox */
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Remove default number input arrows in WebKit browsers */
+    margin: 0; /* Remove margin */
+}
+
+.btn-submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sec-download{
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    margin: 30px 100px;
+}
+.download-section {
+    margin-top: 20px;
+}
+
+.download-section label {
+    margin-right: 10px;
+}
+
+#download-quiz-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#download-quiz-btn:hover {
+    background-color: #0056b3;
+}
+
