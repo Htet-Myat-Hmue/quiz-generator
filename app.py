@@ -32,6 +32,10 @@ def download_quiz():
     file_format = request.json.get('file_format', 'pdf')
     include_answers = request.json.get('include_answers', True)
 
+    print("Received questions:", questions)  # Debugging line
+    print("File format:", file_format)  # Debugging line
+    print("Include answers:", include_answers)  # Debugging line
+
     if file_format == 'pdf':
         return generate_pdf(questions, include_answers)
     elif file_format == 'docx':
@@ -46,7 +50,7 @@ def generate_pdf(questions, include_answers):
     y = height - 50
 
     pdf.setFont("Helvetica", 12)
-    
+
     for index, question_data in enumerate(questions, start=1):
         question = question_data['question']
         choices = question_data.get('choices', [])
@@ -55,9 +59,11 @@ def generate_pdf(questions, include_answers):
         pdf.drawString(50, y, f"Q{index}: {question}")
         y -= 20
         
-        for i, choice in enumerate(choices, start=1):
-            pdf.drawString(70, y, f"{i}. {choice}")
-            y -= 20
+        # Check if choices is not None and has elements
+        if choices:
+            for i, choice in enumerate(choices, start=1):
+                pdf.drawString(70, y, f"{i}. {choice}")
+                y -= 20
 
         if include_answers:
             pdf.drawString(50, y, f"Answer: {answer}")
@@ -71,7 +77,7 @@ def generate_pdf(questions, include_answers):
 
     pdf.save()
     buffer.seek(0)
-    
+
     return send_file(buffer, as_attachment=True, download_name="quiz.pdf", mimetype='application/pdf')
 
 def generate_docx(questions, include_answers):
@@ -84,11 +90,14 @@ def generate_docx(questions, include_answers):
 
         doc.add_paragraph(f"Q{index}: {question}")
 
-        for i, choice in enumerate(choices, start=1):
-            doc.add_paragraph(f"{i}. {choice}", style='ListNumber')
+        # Check if choices is not None and has elements
+        if choices:
+            for i, choice in enumerate(choices, start=1):
+                doc.add_paragraph(f"{i}. {choice}", style='ListNumber')
 
         if include_answers:
             doc.add_paragraph(f"Answer: {answer}")
+
         doc.add_paragraph("")  # Add some space
 
     buffer = BytesIO()
