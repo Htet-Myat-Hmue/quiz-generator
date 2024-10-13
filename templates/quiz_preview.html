@@ -11,15 +11,78 @@
         <img src="{{ url_for('static', filename='quiz-genie.png') }}" alt="Quiz Image">
     </div>
     <h2>Generated Quiz Questions</h2>
+
+    <div class="sec-download">
+            <form id="download-form" style="margin-top: 20px;">
+                <label for="file-format">Download Format:</label>
+                <select id="file-format" required>
+                    <option value="pdf">PDF</option>
+                    <option value="docx">DOCX</option>
+                </select>
+
+                <label for="include-answers">Include Answers:</label>
+                <input type="checkbox" id="include-answers" checked>
+
+                <button type="submit">Download Quiz</button>
+            </form>
+    </div>
     <div class="sec-quiz-preview">
         <ul class="quiz-list">
+            <!-- Loop through the questions and answers -->
             {% for item in questions %}
                 <li>
-                    {{ item['question'] }}<br>
+                    <strong>Question:</strong> {{ item['question'] }}<br>
+                    <!-- Check if the question has multiple choices -->
+                    {% if item['choices'] %}
+                        <strong>Choices:</strong>
+                        <ol type="A">
+                            {% for choice in item['choices'] %}
+                                <li>{{ choice }}</li>  <!-- Display each choice -->
+                            {% endfor %}
+                        </ol>
+                    {% endif %}
+                    <strong>Correct Answer:</strong> {{ item['answer'] }}  <!-- Display the correct answer -->
                 </li>
+                <hr> <!-- Optional: add a line break between questions -->
             {% endfor %}
         </ul>
     </div>
-    <a class = "go-back-btn" href="/">Go Back</a>
+
+    <a class="go-back-btn" href="/">Go Back</a>
+    
+    <script>
+        document.getElementById('download-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            
+            const quizData = {{ questions|tojson }};
+            const fileFormat = document.getElementById('file-format').value;
+            const includeAnswers = document.getElementById('include-answers').checked;
+
+            fetch('/download_quiz', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    quiz_data: quizData,
+                    file_format: fileFormat,
+                    include_answers: includeAnswers
+                }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = `quiz.${fileFormat}`;
+                link.click();
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
 </body>
 </html>
