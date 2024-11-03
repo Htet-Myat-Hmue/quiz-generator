@@ -1,14 +1,19 @@
 import spacy
 
+# Load the spaCy model once globally
+nlp = spacy.load("en_core_web_sm")
+
 def process_text(text):
-    nlp = spacy.load("en_core_web_sm")
+    # Process the text with spaCy
     doc = nlp(text)
     
-    # Extract tokens and sentences
-    tokens = [token.text for token in doc if not token.is_stop and not token.is_punct]
-    sentences = [sent.text for sent in doc.sents]
-    
+    # Extract relevant information
+    tokens = [token.lemma_ for token in doc if not token.is_stop and not token.is_punct]  # Using lemmas
+    sentences = [sent.text.strip() for sent in doc.sents]
+    entities = [(ent.text, ent.label_) for ent in doc.ents]  # Extract named entities
+
     return {
         'tokens': tokens,
-        'sentences': sentences  # Make sure to include this key
+        'sentences': sentences,
+        'entities': entities  # Add named entities to the output
     }

@@ -27,13 +27,9 @@ h2{
     align-items: center;
 }
 
-form {
-    margin-top: 20px;
-}
-
 img {
     display: block; 
-    margin: 20px auto; 
+    margin: 0px auto; 
     width: 35% !important; /* Correct placement of !important */
     height: auto;
 }
@@ -47,8 +43,8 @@ img {
 .sec-upload {
     border: 2px solid #000000;
     border-radius: 20px;
-    margin: 30px 400px;
-    padding: 50px;
+    margin: 10px 400px;
+    padding: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
     transition: transform 0.3s; /* Smooth transition for 3D effect */
 }
@@ -150,11 +146,11 @@ a{
     transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
-.quiz-list li:hover {
-    background-color: #e02c2c;; /* Change background on hover */
-    color: white; /* Change text color on hover */
-    cursor: pointer; /* Pointer cursor on hover */
-}
+/* .quiz-list li:hover {
+    background-color: #e02c2c;; 
+    color: white; 
+    cursor: pointer;
+} */
 
 .quiz-option {
     display: flex; /* Use flexbox for the layout */
@@ -244,5 +240,23 @@ input[type="number"]::-webkit-outer-spin-button {
 
 #download-quiz-btn:hover {
     background-color: #0056b3;
+}
+
+/* Centering the file name display and preview button */
+.file-preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.file-name {
+    margin-bottom: 10px; /* Space between file name and preview button */
+}
+
+.btn-preview {
+    /* Styling for preview button */
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
 }
 

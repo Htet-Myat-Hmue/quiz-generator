@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script> <!-- Include mammoth.js -->
     <title>Quiz Generator</title>
 </head>
 <body class="container">
     <div>
         <img src="{{ url_for('static', filename='quiz-genie.png') }}" alt="Quiz Image">
+    </div>
+
+    <div class="btn-submit">
+        <button onclick="window.open('{{ url_for('static', filename='user-guide.pdf') }}', '_blank')">Open User Guide</button>
     </div>
 
     <div class="sec-upload">
@@ -19,10 +24,18 @@
                 <div class="button-container">
                     <label for="file-upload" class="file-label">Choose File</label>
                     <input type="file" name="file" accept=".docx, .pdf, .txt, .doc" id="file-upload" required onchange="updateFileName()">
-                    <div class="file-name" id="file-name-display">No file chosen</div>
+                    <br>
+                    <div class="file-name" id="file-name-display" style="display: none;">No file chosen</div>
                 </div>
+                
+                <div class="file-preview-container">
+                    <div id="file-size-display" style="display: none;">File Size: 0 KB</div>
+                    <div id="preview-button" style="display: none;">
+                        <button class="btn-preview" type="button" onclick="previewFile()">Preview File</button>
+                    </div>
+                </div>
+
                 <div class="quiz-option">
-                     <!-- New quiz type selection dropdown -->
                     <div class="quiz-type-container">
                         <label for="quiz-type">Select Quiz Type:</label>
                         <select name="quiz_type" id="quiz-type" required>
@@ -33,13 +46,23 @@
                         </select>
                     </div>
 
-                    <!-- Number of Questions Input Field -->
                     <div class="number-questions-container">
                         <label for="num-questions">Number of Questions:</label>
                         <input type="number" name="num_questions" id="num-questions" min="1" required>
                     </div>
-
                 </div>
+
+                <br>
+
+                <div class="quiz-level-container">
+                    <label for="quiz-level">Select Difficulty Level:</label>
+                    <select name="quiz_level" id="quiz-level" required>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+
                 <div class="btn-submit">
                     <button type="submit">Generate Quiz</button>
                 </div>
@@ -51,8 +74,78 @@
         function updateFileName() {
             const input = document.getElementById('file-upload');
             const fileNameDisplay = document.getElementById('file-name-display');
-            const fileName = input.files.length > 0 ? input.files[0].name : 'No file chosen';
-            fileNameDisplay.textContent = fileName;
+            const fileSizeDisplay = document.getElementById('file-size-display');
+            const previewButton = document.getElementById('preview-button');
+    
+            // Check if a file is selected
+            if (input.files.length > 0) {
+                const file = input.files[0];
+                const fileName = file.name;
+                const fileSize = (file.size / 1024).toFixed(2); // Convert size to KB
+                
+                fileNameDisplay.textContent = fileName;
+                fileNameDisplay.style.display = 'block';
+                fileSizeDisplay.textContent = `File Size: ${fileSize} KB`; // Set file size text
+                fileSizeDisplay.style.display = 'block'; // Show file size
+                previewButton.style.display = 'block';
+            } else {
+                // Hide elements if no file is chosen
+                fileNameDisplay.style.display = 'none';
+                fileSizeDisplay.style.display = 'none'; // Hide file size display
+                previewButton.style.display = 'none';
+            }
+        }
+
+        function previewFile() {
+            const input = document.getElementById('file-upload');
+            if (input.files.length === 0) {
+                alert('Please choose a file to preview.');
+                return;
+            }
+            const file = input.files[0];
+            const fileType = file.type;
+
+            // Read the file based on its type
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const fileContent = e.target.result;
+
+                if (fileType === 'text/plain') {
+                    // Preview text files
+                    const newWindow = window.open();
+                    newWindow.document.write(`<pre>${fileContent}</pre>`);
+                    newWindow.document.close(); // Close the document to render it
+                } else if (fileType === 'application/msword' || fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                    // Convert Word documents to HTML and preview
+                    mammoth.convertToHtml({ arrayBuffer: e.target.result })
+                        .then(displayResult)
+                        .catch(handleError);
+                } else {
+                    alert('This file type cannot be previewed.');
+                }
+            };
+
+            // Read files as text or ArrayBuffer
+            if (fileType === 'application/pdf') {
+                alert("PDF preview is not supported. Please download the PDF to view it.");
+            } else if (fileType === 'text/plain') {
+                reader.readAsText(file); // Read as text for .txt files
+            } else {
+                reader.readAsArrayBuffer(file); // Read as ArrayBuffer for Word documents
+            }
+        }
+
+        function displayResult(result) {
+            // Display the converted HTML in a new window
+            const newWindow = window.open();
+            newWindow.document.write(result.value); // This is the HTML content
+            newWindow.document.close(); // Close the document to render it
+        }
+
+        function handleError(err) {
+            console.log(err);
+            alert('Error converting document.');
         }
     </script>
 </body>
