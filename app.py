@@ -8,7 +8,6 @@ from io import BytesIO
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from docx import Document
-import random
 import os
 
 app = Flask(__name__)
@@ -36,8 +35,6 @@ def download_quiz():
     file_format = request.json.get('file_format', 'pdf')
     include_answers = request.json.get('include_answers', True)
     original_filename = request.json.get('original_filename', 'quiz')  # Get original filename from request
-
-    print(f"Download requested: {file_format}, Filename: {original_filename}")
 
     if file_format == 'pdf':
         return generate_pdf(questions, include_answers, original_filename)

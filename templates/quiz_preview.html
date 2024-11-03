@@ -57,6 +57,7 @@
             const quizData = {{ questions|tojson }};
             const fileFormat = document.getElementById('file-format').value;
             const includeAnswers = document.getElementById('include-answers').checked;
+            const originalFilename = "{{ original_filename }}";
 
             fetch('/download_quiz', {
                 method: 'POST',
@@ -78,7 +79,7 @@
             .then(blob => {
                 const link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
-                link.download = `quiz.${fileFormat}`;
+                link.download = `${originalFilename}_quiz.${fileFormat}`;
                 link.click();
             })
             .catch(error => console.error('Error:', error));
